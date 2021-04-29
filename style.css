@@ -1,0 +1,43 @@
+.grid-container {
+    background-color: black;
+    display: grid;
+    gap: 5px;
+    height: 100vh;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.section1 {
+    background-color: red;
+}
+
+.section2 {
+    background-color: blue;
+}
+
+.section3 {
+    background-color: green;
+}
+
+.section4 {
+    background-color: red;
+}
+
+.section5 {
+    background-color: blue;
+}
+
+.section6 {
+    background-color: green;
+}
+
+.section7 {
+    background-color: red;
+}
+
+.section8 {
+    background-color: blue;
+}
+
+.section9 {
+    background-color: green;
+}
