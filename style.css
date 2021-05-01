@@ -48,10 +48,16 @@ body {
     gap: 5px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr 4fr 1fr;
-  }
+}
+
+.header {
+    text-align: center;
+    color: #333;
+}
   
 .todo-box{
     background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
     backdrop-filter: blur(10px);
     transition: linear 2px ease-in-out;
     grid-column: 2/3;
@@ -64,7 +70,7 @@ body {
 }
   
 .todo-item{
-    background: #add8e6;
+    background: rgb(173, 216, 230);
     color: #333;
     display: flex;
     justify-content: space-between;
