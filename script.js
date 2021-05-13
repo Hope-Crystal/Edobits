@@ -8,139 +8,82 @@ function writeName() {
             document.getElementById("welcome").innerHTML = "Hello "+ userName
         }
 }
+// New script
+var form = document.getElementById("addForm");
+var itemList = document.getElementById("items");
 
-// list of todos
-let listOfTodo = []; 
+// Form submit event
+form.addEventListener("submit", addItem);
 
-/// List of timeout to help keep track of our todos item state
-let timeouts = {};
+function addItem(e) {
+  e.preventDefault();
 
+  // Get input value
+  var newItem = document.getElementById("inputItem").value;
 
-/**
- * Get Element By Id
- * @param {string} id 
- * @returns HtmlDocumentObject
- */
-const getElement = (id) => document.getElementById(id);
+  // Create new li with class
+  var li = document.createElement("li");
+  li.className = "todo-item";
 
-/**
- * Add todo to list of our todos array
- * @param {string} todo "call mum"
- * @returns
- */
-function addTodo(todo) {
-  // validate todo is not empty
-  if (!todo) return;
+  // Add text node with input value
+  var createText = document.createTextNode(newItem);
+  li.appendChild(createText);
 
-  // check if todo already exists
-  if (listOfTodo.includes(todo)) return;
+  // Create the delete buttonwithlass and append to li
+  var delButton = document.createElement("button");
+  delButton.className = "btn btn-danger btn-sm delete";
+  delButton.appendChild(document.createTextNode("X"));
+  li.appendChild(delButton);
 
-  // add to array of todo
-  listOfTodo.push(todo);
-
-  // add todo to list of todo elements in html page
-  getElement("todo-item-box").innerHTML += todoItem(todo);
-
-  // store todo in local storage
-  localStorage.setItem("todos", JSON.stringify(listOfTodo));
-
-  // call change event listener on all todos
-  onNewTodoAdded();
-
-  getElement("input-todo").value = "";
+  itemList.appendChild(li);
 }
 
-/**
- * Load list of todos from local storage
- */
-function loadFormStorage() {
-  const todos = localStorage.getItem("todos");
+// Delete button event
+itemList.addEventListener("click", removeItem);
 
-  if (!todos) return;
-
-  JSON.parse(todos).map((todo) => {
-    addTodo(todo);
-  });
-}
-
-
-
-/**
- * Handles Changes To Todo Item Checkbox Change
- * @param {HTMLChangeEvent} event 
- * @param {string} todo 
- */
-function onTodoInputChange(event, todo) {
-
-  if (event.target.checked === true) {
-    timeouts[todo] = setTimeout(() => {
-      removeTodo(todo);
-    }, 3 * 1000 /** 3000 ~ 3 seconds */ );
-  }
-
-  if (event.target.checked === false) {
-    clearTimeout(timeouts[todo]);
-    timeouts[todo] = 0;
-  }
-
-  getElement(todo).classList.toggle("completed");
-}
-
-/**
- * Add New Change Event Listeners On Each Todo Items
- */
-function onNewTodoAdded() {
-  listOfTodo.forEach((todo) => {
-    getElement("input" + todo).addEventListener("change", (event) =>
-      onTodoInputChange(event, todo)
-    );
-  });
-}
-
-/**
- * Remove from out list of todo items
- * @param {string} todo 
- */
-function removeTodo(todo) {
-  listOfTodo = listOfTodo.filter((e) => todo != e);
-  const todoElement = getElement(todo);
-  if (todoElement) {
-    todoElement.remove();
+function removeItem(e) {
+  if (e.target.classList.contains("delete")) {
+    if (confirm("Are you sure?")) {
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
   }
 }
 
-/**
- * On Add Todo Button Click
- */
-function onClickAddTodoButton() {
-  const newTodo = getElement("input-todo").value;
-  addTodo(newTodo);
+// v1.0.2
+/* const submitForm = document.querySelector('.add');
+const addButon = document.querySelector('.add-todo')
+const todoList = document.querySelector('.todo-item-box');
+const list = document.querySelector('.todo-item span');
+
+let listLength = list.length;
+
+const generateTemplate = (todo) => {
+
+  const html = ` <div id="todo_${listLength}" class="todo-item">
+                    <span>${todo}</span>
+                    <input id="${"input" + todo}" class="todo-checkbox" type="checkbox"/>
+                  </div>`
+
+  todoList.innerHTML += html;
 }
 
-
-
-/**
- * Takes a todo string and returns a Html todo element
- * @param {string} todo 
- * @returns HTMLElement
- */
-function todoItem(todo) {
-  return `
-    <div id="${todo}" class="todo-item">
-    <span>${todo}</span>
-    <input id="${"input" + todo}" class="todo-checkbox" type="checkbox"/>
-    </div>
-    `;
-}
-
-/**
- * Listen for enter key press on input todo text 
- */
-getElement("input-todo").addEventListener("keydown",(event)=>{
-  if(event.code === "Enter"){
-    onClickAddTodoButton()
+function addTodos(e) {
+  e.preventDefault();
+  const todo = submitForm.add.value.trim();
+  if (todo.length) {
+    listLength = listLength + 1;
+    generateTemplate(todo);
+    submitForm.reset();
   }
-})
+}
 
-// Load Data From Storage
-loadFormStorage();
+submitForm.addEventListener('keydown', addTodos);
+submitForm.addEventListener('submit', addTodos);
+submitForm.addEventListener('click', addTodos);
+
+function deleteTodos(e) {
+  if (e.target.classList.contains('delete')) {
+    e.target.parentElement.remove();
+  }
+} */
